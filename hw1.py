@@ -53,7 +53,10 @@ def top5_countries_by_date(day: int, month: int, year: int = 2020) -> List[str]:
     """
 
     # Your code goes here (remove pass)
-    pass
+  data=f"{month}/{day}/20"
+  df=confirmed_cases.groupby(by=["Country/Region"]).sum()
+  df = df.reset_index()
+  return df[["Country/Region", data]].sort_values(by=data, ascending=False).head(5)["Country/Region"].to_list()
 
 
 def no_new_cases_count(day: int, month: int, year: int = 2020) -> int:
@@ -73,4 +76,10 @@ def no_new_cases_count(day: int, month: int, year: int = 2020) -> int:
     """
     
     # Your code goes here (remove pass)
-    pass
+  import datatime
+  data_dzis=datetime.date(year,month,day)
+  data_wczoraj=data_dzis+datatime.timedelta(days=-1)
+  str_date = date.strftime('%m/%d/%y').lstrip('0').replace("/0", "/")
+  str_prev_date = prev_date.strftime('%m/%d/%y').lstrip('0').replace("/0", "/")
+  result = confirmed_cases.loc[confirmed_cases[str_date] != confirmed_cases[str_prev_date]]
+  return result.shape[0]
