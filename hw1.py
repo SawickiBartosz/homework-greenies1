@@ -29,7 +29,11 @@ def poland_cases_by_date(day: int, month: int, year: int = 2020) -> int:
     """
     
     # Your code goes here (remove pass)
-    pass
+def poland_cases_by_date(day, month, year=2020):
+  url = f"https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv"
+  df = pd.read_csv(url, error_bad_lines=False)
+  wynik=df.loc[df["Country/Region"]=="Poland"][f"{month}/{day}/20"].values[0]
+  return wynik
 
 
 def top5_countries_by_date(day: int, month: int, year: int = 2020) -> List[str]:
